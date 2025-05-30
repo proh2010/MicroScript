@@ -1,6 +1,11 @@
 #this is compiled file of test.s
-a=['' for i in range(10 )]
-a.append( 'm')
-print(a )
+a=input()
+if(a > 5):
+    print("yes")
 
-input('Enter to exit')
+else:
+print("no")
+
+print("fdg")
+
+input('Enter to exit.')
