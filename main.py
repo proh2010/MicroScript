@@ -44,16 +44,18 @@ def findword(text):
 
     string += text
     global spaces
+    global spacesp
     if (string.count("{") > 0):
 
         spaces += string.count("{")
         string = string.replace('{', '')
     if (string.count("}")>0):
 
-        spaces -= 1 + string.count("}")
-        global spacesp
+        spaces -= string.count("}")
+        
         spacesp=spaces
-        string=string.replace('}','')
+        #string=string.replace('}','')
+        string = "/none"
         #b=commtext.find(" ")
         #while b != -1:
         #    commtext=commtext[:b]+commtext[b+1:]# remove spaces
@@ -145,8 +147,9 @@ def compiler(way):
     strings = list(text.split("\n"))
     for i in range(len(strings)):
         finalstr =findword(strings[i])
-
-        comp.write(" "*4*spacesp + finalstr + "\n")
+        if(finalstr != "/none"):
+            comp.write(" "*4*spacesp + finalstr + "\n")
+        print(spacesp, spaces)
         spacesp=spaces
     comp.write("input('Enter to exit.')")
     os.startfile(os.path.abspath(compway))

@@ -1,11 +1,8 @@
-a = in()
+a = int(in())
 if(a > 5){
     out("yes")
+    
 }
-
-
-
-
 else(){
     out("no")
 }
