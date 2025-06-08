@@ -27,7 +27,7 @@ def findword(text):
             sys.exit()
 
 
-        print(text, " ", string,c)
+        #print(text, " ", string,c)
         if c==a-1:
             string += text[:a].replace(" ", "")
             string += f"({findword(text[a+1:b-1])})"
@@ -43,6 +43,19 @@ def findword(text):
         a = text.find("(")
 
     string += text
+    global spaces
+    global spacesp
+    if (string.count("{") > 0):
+
+        spaces += string.count("{")
+        string = string.replace('{', '')
+    if (string.count("}")>0):
+
+        spaces -= string.count("}")
+        
+        spacesp=spaces
+        #string=string.replace('}','')
+        string = "/none"
         #b=commtext.find(" ")
         #while b != -1:
         #    commtext=commtext[:b]+commtext[b+1:]# remove spaces
@@ -105,6 +118,15 @@ def findcom(comtext,argument):
                 sys.exit()
         else:
             sys.exit()
+    elif comtext == "if":
+
+        return f"if({argument}):"
+    elif comtext == "else":
+
+        return f"else:"
+    elif comtext == "elif":
+
+        return f"elif({argument}):"
     else:
         return f"print('no command: {comtext}')"
 def compiler(way):
@@ -119,12 +141,17 @@ def compiler(way):
     comp = open("compile/" + os.path.basename(way).split('/')[-1][:-2] + ".py", "w")# make a new file
     comp.write("#this is compiled file of " + way + "\n")
 
+    global spaces
+    spacesp=0
+    spaces = 0
     strings = list(text.split("\n"))
     for i in range(len(strings)):
         finalstr =findword(strings[i])
-        comp.write(finalstr + "\n")
-
-    comp.write("input('Enter to exit')")
+        if(finalstr != "/none"):
+            comp.write(" "*4*spacesp + finalstr + "\n")
+        print(spacesp, spaces)
+        spacesp=spaces
+    comp.write("input('Enter to exit.')")
     os.startfile(os.path.abspath(compway))
 
 
